@@ -14,8 +14,14 @@ app.get('/',(req,res)=>{
     res.send('node-mongo project server is running')
 })
 
-
+// route end point
 app.use('/api/v1/',routes)
+
+
+// Not found route
+app.get('*',(req,res)=>{
+    res.send('404 Not Found')
+})
 
 
 module.exports = app;
