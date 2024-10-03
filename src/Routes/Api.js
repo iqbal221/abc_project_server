@@ -1,29 +1,32 @@
 const express = require('express');
 const UserController = require('../Controllers/UserController');
 const InfoController = require('../Controllers/InfoController');
-// const AuthVerifyMiddleware = require('../Middleware/AuthVerifyMiddleware')
+const {AuthVerifyToken} = require('../Middleware/AuthVerifyToken')
 const router = express.Router();
 
 // User
 router.post('/CreateUser',UserController.CreateUser);
-// router.post('/LoginUser',AuthVerifyMiddleware,UserController.UserLogin);
+router.post('/LoginUser',UserController.LoginUser);
+
+// user Info
+router.get("/GetUserInfo", AuthVerifyToken,  UserController.GetUserInfo)
 
 // Info
-router.post('/CreateInfo',InfoController.CreateInfo)
-router.get('/GetInfo',InfoController.GetInfo);
-router.get('/GetInfoById/:id',InfoController.GetInfoById);
+router.post('/CreateInfo',AuthVerifyToken, InfoController.CreateInfo)
+router.get('/ReadInfoByUser', AuthVerifyToken, InfoController.ReadInfoByUser);
+router.get('/ReadByUserID/:id',InfoController.ReadByUserID);
 router.patch('/UpdateInfo/:id',InfoController.UpdateInfo);
-router.delete('/DeleteInfo/:id',InfoController.DeleteInfo);
+router.delete('/DeleteInfo/:id',AuthVerifyToken,InfoController.DeleteInfo);
 
 // Info By Head
-router.get('/ReadBySalary',InfoController.ReadBySalary);
-router.get('/ReadBySell',InfoController.ReadBySell);
-router.get('/ReadByOfficeRent',InfoController.ReadByOfficeRent);
-router.get('/ReadByStationary',InfoController.ReadByStationary);
+router.get('/ReadBySalary',AuthVerifyToken,InfoController.ReadBySalary);
+router.get('/ReadBySell',AuthVerifyToken,InfoController.ReadBySell);
+router.get('/ReadByOfficeRent',AuthVerifyToken,InfoController.ReadByOfficeRent);
+router.get('/ReadByStationary',AuthVerifyToken,InfoController.ReadByStationary);
 
 // Summary
-router.get('/ReadBySummary',InfoController.ReadBySummary);
-router.get('/ReadByTotalType',InfoController.ReadByTotalType);
+router.get('/ReadBySummary',AuthVerifyToken,InfoController.ReadBySummary);
+router.get('/ReadByTotalType',AuthVerifyToken,InfoController.ReadByTotalType);
 
 
 

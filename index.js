@@ -23,12 +23,23 @@ app.use('/api/v1/',routes)
 
 // Not found route
 app.get('*',(req,res)=>{
-    res.send('404 Not Found')
+    res.send('404 Not Found anything')
 })
 
 // database connection
-mongoose.connect(process.env.MONGO_URI).then(()=>{
-    console.log(`database connected successfully`.blue)
+//Database
+// const URI =
+//   "mongodb+srv://zahed:681562@cluster0.t4uwg.mongodb.net/INVENTORY?retryWrites=true&w=majority";
+// const OPTION = { autoIndex: true };
+// mongoose.connect(process.env.MONGO_URI, OPTION)
+// .then(()=>{
+//     console.log(`database connected successfully`.blue)
+// })
+// .catch((err)=>{
+//     console.error(err)
+// })
+mongoose.connect(process.env.database_local).then(()=>{
+   console.log(`database connected successfully`.blue)  
 })
 
 // server port

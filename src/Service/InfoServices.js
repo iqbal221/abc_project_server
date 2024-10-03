@@ -6,14 +6,15 @@ exports.CreateInfoService = async(data) =>{
     return result
 }
 
-// get Info
-exports.GetInfoService = async() =>{
-    const infos = await InfoModel.find({})
+// get Info by user email
+exports.ReadInfoByUserService = async(Email) =>{
+    const infos = await InfoModel.find({Email})
+    // console.log(infos)
     return infos
 }
 
 // get Info By Id
-exports.GetInfoByIdService = async(InfoId) =>{
+exports.ReadByUserIDService = async(InfoId) =>{
     const info = await InfoModel.findOne({_id:InfoId})
     return info
 }
@@ -31,38 +32,41 @@ exports.DeleteInfoService = async(id) =>{
 }
 
 // salary info
-exports.ReadBySalaryService = async() =>{
-    const result = await InfoModel.find({Head:{$in:['Salary']}})
+exports.ReadBySalaryService = async(Email) =>{
+    const result = await InfoModel.find({$and:[{Head:{$in:['Salary']}}, {Email:Email}]})
     return result
 }
 
 // sell info
-exports.ReadBySellService = async() =>{
-    const result = await InfoModel.find({Head:{$in:['Sell']}})
+exports.ReadBySellService = async(Email) =>{
+    const result = await InfoModel.find({$and:[{Head:{$in:['Sell']}}, {Email:Email}]})
+    console.log(result)
     return result
 }
 
 // sell info
-exports.ReadByOfficeRentService = async() =>{
-    const result = await InfoModel.find({Head:{$in:['Office Rent']}})
+exports.ReadByOfficeRentService = async(Email) =>{
+    const result = await InfoModel.find({$and:[{Head:{$in:['Office Rent']}}, {Email:Email}]})
+    console.log(result)
     return result
-}
+    }
+ 
 
 // sell info
-exports.ReadByStationaryService = async() =>{
-    const result = await InfoModel.find({Head:{$in:['Stationary']}})
+exports.ReadByStationaryService = async(Email) =>{
+    const result = await InfoModel.find({$and:[{Head:{$in:['Stationary']}}, {Email:Email}]})
     return result
 }
 
 // Summary
-exports.ReadBySummaryService = async() =>{
-    const result = await InfoModel.aggregate([{$group:{_id:'$Type',total:{$sum:'$Amount'}}}])
+exports.ReadBySummaryService = async(Email) =>{
+    const result = await InfoModel.aggregate([{$match:{Email:Email}},{$group:{_id:'$Type',total:{$sum:'$Amount'}}}])
     return result
 }
 
 // Total Type
-exports.ReadByTotalTypeService = async() =>{
-    const result = await InfoModel.aggregate([{$group:{_id:'$Head',total:{$sum:'$Amount'}}}])
+exports.ReadByTotalTypeService = async(Email) =>{
+    const result = await InfoModel.aggregate([{$match:{Email:Email}},{$group:{_id:'$Head',total:{$sum:'$Amount'}}}])
     return result
 }
 

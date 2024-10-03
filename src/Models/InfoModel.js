@@ -15,6 +15,9 @@ const DataSchema = mongoose.Schema({
     Name:{
         type:String,
     },
+    Email:{
+        type:String
+    },
     Head:{
         type:String,
     },
